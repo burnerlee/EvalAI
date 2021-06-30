@@ -116,6 +116,7 @@ services:
       - '--web.route-prefix=/push_gateway'
     ports:
       - '9091:9091' 
+      
   alertmanager:
     hostname: alerts
     image: prom/alertmanager
@@ -129,4 +130,4 @@ services:
       - '--storage.path=/data'
       - '--web.external-url=http://localhost:9093/alerts'
     ports:
-      - 9093:9093
+      - '9093:9093'
