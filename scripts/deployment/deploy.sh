@@ -153,11 +153,6 @@ case $opt in
             docker-compose -f docker-compose-${env}.yml up -d statsd-exporter
             echo "Completed deploy operation."
             ;;
-        deploy-alertmanager)
-            echo "Deploying prometheus-alertmanager docker container..."
-            docker-compose -f docker-compose-${env}.yml up -d alertmanager
-            echo "Completed deploy operation."
-            ;;
         deploy-node-exporter)
             echo "Deploying node-exporter docker container..."
             docker-compose -f docker-compose-${env}.yml up -d node-exporter
@@ -168,14 +163,9 @@ case $opt in
             docker-compose -f docker-compose-${env}.yml up -d pushgateway
             echo "Completed deploy operation."
             ;;
-        deploy-node-exporter)
-            echo "Deploying node_exporter docker container..."
-            docker-compose -f docker-compose-${env}.yml up -d node_exporter
-            echo "Completed deploy operation."
-            ;;
-        deploy-push-gateway)
-            echo "Deploying push_gateway docker container..."
-            docker-compose -f docker-compose-${env}.yml up -d push_gateway
+        deploy-alertmanager)
+            echo "Deploying prometheus-alertmanager docker container..."
+            docker-compose -f docker-compose-${env}.yml up -d alertmanager
             echo "Completed deploy operation."
             ;;
         scale)
