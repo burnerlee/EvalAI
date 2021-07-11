@@ -47,7 +47,7 @@ case $opt in
 					aws s3 cp s3://cloudcv-secrets/evalai/${env}/docker_${env}.env ./docker/prod/docker_${env}.env
 					docker-compose -f docker-compose-${env}.yml rm -s -v -f
 					docker-compose -f docker-compose-${env}.yml pull
-					docker-compose -f docker-compose-${env}.yml up -d --force-recreate --remove-orphans statsd-exporter django nodejs nodejs_v2 celery node_exporter push_gateway alertmanager
+					docker-compose -f docker-compose-${env}.yml up -d --force-recreate --remove-orphans statsd-exporter django nodejs nodejs_v2 celery node_exporter push_gateway
 				ENDSSH2
 			ENDSSH
             ;;
@@ -56,9 +56,6 @@ case $opt in
             echo "Pulling environment variables file..."
             aws s3 cp s3://cloudcv-secrets/evalai/${env}/docker_${env}.env ./docker/prod/docker_${env}.env
             echo "Environment varibles file successfully downloaded."
-            echo "Pulling alertmanager config file..."
-            aws s3 cp s3://cloudcv-secrets/evalai/${env}/alertmanager_${env}.env ./monitoring/prometheus/alertmanager_${env}.yml
-            echo "Alertmanager config file successfully downloaded."
             echo "Pulling docker images from ECR..."
             docker-compose -f docker-compose-${env}.yml pull
             echo "Completed Pull operation."
@@ -163,11 +160,6 @@ case $opt in
             docker-compose -f docker-compose-${env}.yml up -d push_gateway
             echo "Completed deploy operation."
             ;;
-        deploy-alertmanager)
-            echo "Deploying alertmanager docker container..."
-            docker-compose -f docker-compose-${env}.yml up -d alertmanager
-            echo "Completed deploy operation."
-            ;;
         scale)
             service=${3}
             instances=${4}
@@ -215,8 +207,6 @@ case $opt in
         echo "        Eg. ./scripts/deployment/deploy.sh deploy-node-exporter production"
         echo "    deploy-push-gateway : Deploy push_gateway container in the respective environment."
         echo "        Eg. ./scripts/deployment/deploy.sh deploy-push-gateway production"
-        echo "    deploy-alertmanager : Deploy alertmanager container in the respective environment."
-        echo "        Eg. ./scripts/deployment/deploy.sh deploy-alertmanager production"
         echo "    scale  : Scale particular docker service in an environment."
         echo "        Eg. ./scripts/deployment/deploy.sh scale production django 5"
         echo "    clean  : Remove all docker containers and images."

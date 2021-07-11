@@ -30,4 +30,4 @@ alerting:
   alertmanagers:
     - path_prefix: 'alerts/'
       static_configs:
-      - targets: ['staging.eval.ai']
+      - targets: ['alerts:9093']
